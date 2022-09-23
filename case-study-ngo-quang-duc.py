@@ -184,13 +184,17 @@ def about():
 root = Tk()
 root.geometry("840x450")
 root.title('HRM v1.0')
+root['bg'] = '#75859C'
 icon_master = PhotoImage(file = r'C:\Users\Admin\New folder\selection.png')
 root.iconphoto(False, icon_master)
 
 #add the menu to the menubar
-menubar = Menu(root)
+menubar = Menu(root, background='lightblue', foreground='black',
+               activebackground='#004c99', activeforeground='white')
 root.config(menu=menubar)
-file_menu = Menu(menubar,tearoff=0)
+file_menu = Menu(menubar, tearoff=0, background='#949DF9', foreground='black')
+
+#file_menu = Menu(menubar,tearoff=0)
 
 file_menu.add_command(
     label='Exit',
@@ -203,7 +207,7 @@ menubar.add_cascade(
 )
 help_menu = Menu(
     menubar,
-    tearoff=0
+    tearoff=0,background='#949DF9', foreground='black'
 )
 
 help_menu.add_command(label='Về chúng tôi',command=about)
@@ -215,19 +219,19 @@ menubar.add_cascade(
     underline=0
 )
 my_img = tk.PhotoImage(file = r'C:\Users\Admin\New folder\hiring.png')
-l2 = tk.Label(root, image=my_img )
+l2 = tk.Label(root, image=my_img, bg ='#75859C')
 l2.place(x=700, y=15)
 
 global e1
 global e2
 global e3
 global e4
- 
-tk.Label(root, text="QUẢN LÝ NHÂN SỰ", fg='#ba3271', font=(None, 30)).place(x=280, y=35)
-tk.Label(root, text="Mã nhân viên").place(x=10, y=10)
-Label(root, text="Tên nhân viên").place(x=10, y=40)
-Label(root, text="Số điện thoại").place(x=10, y=70)
-Label(root, text="Mức lương").place(x=10, y=100)
+my_font1=('tahoma', 9, 'bold')
+tk.Label(root, text="QUẢN LÝ NHÂN SỰ", fg='#b31464', bg ='#75859C', font=(None, 30)).place(x=290, y=35)
+tk.Label(root, text="Mã nhân viên", bg ='#75859C', fg ='#ECFAFF', font = my_font1).place(x=10, y=10)
+Label(root, text="Tên nhân viên", bg ='#75859C', fg ='#ECFAFF', font = my_font1).place(x=10, y=40)
+Label(root, text="Số điện thoại", bg ='#75859C', fg ='#ECFAFF', font = my_font1).place(x=10, y=70)
+Label(root, text="Mức lương", bg ='#75859C', fg ='#ECFAFF', font = my_font1).place(x=10, y=100)
 
 e1 = Entry(root)
 e1.place(x=140, y=10)
@@ -242,12 +246,12 @@ e4 = Entry(root)
 e4.place(x=140, y=100)
 
 my_font=('tahoma', 10, 'bold')
-Button(root, text="Thêm mới",command = Add,height=3, width= 13, bg='#CB2777',fg='white',font=my_font).place(x=30, y=130)
-Button(root, text="Cập nhật",command = update,height=3, width= 13, bg='#ED4B66',fg='white',font=my_font).place(x=140, y=130)
-Button(root, text="Xóa",command = delete,height=3, width= 13, bg='#FF7557',fg='white',font=my_font).place(x=250, y=130)
-Button(root, text="Tìm kiếm",command = find,height=3, width= 13, bg='#FFA14E',fg='white',font=my_font).place(x=360, y=130)
-Button(root, text="Xuất dữ liệu",command = save,height=3, width= 13, bg='#FFCD54',fg='white',font=my_font).place(x=470, y=130)
-Button(root, text="Nhập dữ liệu",command = import_file,height=3, width= 13, bg='#009690',fg='white',font=my_font).place(x=580, y=130)
+Button(root, text="Thêm mới",command = Add,height=2, width= 13, bg='#CB2777',fg='white',font=my_font).place(x=60, y=137)
+Button(root, text="Cập nhật",command = update,height=2, width= 13, bg='#ED4B66',fg='white',font=my_font).place(x=170, y=137)
+Button(root, text="Xóa",command = delete,height=2, width= 13, bg='#FF7557',fg='white',font=my_font).place(x=280, y=137)
+Button(root, text="Tìm kiếm",command = find,height=2, width= 13, bg='#FFA14E',fg='white',font=my_font).place(x=390, y=137)
+Button(root, text="Xuất dữ liệu",command = save,height=2, width= 13, bg='#00814D',fg='white',font=my_font).place(x=500, y=137)
+Button(root, text="Nhập dữ liệu",command = import_file,height=2, width= 13, bg='#009690',fg='white',font=my_font).place(x=610, y=137)
 cols = ('id', 'empname', 'mobile','salary')
 listBox = ttk.Treeview(root, columns=cols, show='headings')
 
