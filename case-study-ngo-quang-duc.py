@@ -39,17 +39,22 @@ def Add():
     mycursor=mysqldb.cursor()
  
     try:
-       sql = "INSERT INTO  registation (id,empname,mobile,salary) VALUES (%s, %s, %s, %s)"
-       val = (studid,studname,coursename,feee)
-       mycursor.execute(sql, val)
-       mysqldb.commit()
-       lastid = mycursor.lastrowid
-       messagebox.showinfo("information", "Thông tin nhân viên đã được thêm mới")
-       e1.delete(0, END)
-       e2.delete(0, END)
-       e3.delete(0, END)
-       e4.delete(0, END)
-       e1.focus_set()
+        mycursor.execute(f"SELECT * FROM data_kiot_viet.registation where id={studid}")
+        records = mycursor.fetchall()
+        if len(records) is not 0:
+            messagebox.showinfo("Information", "Mã nhân viên đã tồn tại")
+        else:
+            sql = "INSERT INTO  registation (id,empname,mobile,salary) VALUES (%s, %s, %s, %s)"
+            val = (studid,studname,coursename,feee)
+            mycursor.execute(sql, val)
+            mysqldb.commit()
+            lastid = mycursor.lastrowid
+            messagebox.showinfo("information", "Thông tin nhân viên đã được thêm mới")
+            e1.delete(0, END)
+            e2.delete(0, END)
+            e3.delete(0, END)
+            e4.delete(0, END)
+            e1.focus_set()
     except Exception as e:
        print(e)
        mysqldb.rollback()
