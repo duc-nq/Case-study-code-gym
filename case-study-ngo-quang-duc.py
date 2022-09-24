@@ -26,22 +26,22 @@ def GetValue(event):
     e2.insert(0,select['empname'])
     e3.insert(0,select['mobile'])
     e4.insert(0,select['salary'])
- 
+
+
  
 def Add():
     studid = e1.get()
     studname = e2.get()
-
     coursename = e3.get()
     feee = e4.get()
- 
-    mysqldb=mysql.connector.connect(host="103.82.21.72",user="codegym",password="Datcang1!",database="codegym")
-    mycursor=mysqldb.cursor()
- 
+
     try:
-        mycursor.execute(f"SELECT * FROM data_kiot_viet.registation where id={studid}")
+        mysqldb=mysql.connector.connect(host="103.82.21.72",user="codegym",password="Datcang1!",database="codegym")
+        mycursor=mysqldb.cursor()
+        mycursor.execute(f"SELECT * FROM codegym.registation where id={studid}")
         records = mycursor.fetchall()
-        if len(records) is not 0:
+        print(records)
+        if len(records) > 0:
             messagebox.showinfo("Information", "Mã nhân viên đã tồn tại")
         else:
             sql = "INSERT INTO  registation (id,empname,mobile,salary) VALUES (%s, %s, %s, %s)"
@@ -56,11 +56,10 @@ def Add():
             e4.delete(0, END)
             e1.focus_set()
     except Exception as e:
-       print(e)
-       mysqldb.rollback()
-       mysqldb.close()
-    show()
- 
+            print(e)
+            mysqldb.rollback()
+            mysqldb.close()
+    #show()
  
 def update():
     studid = e1.get()
@@ -71,7 +70,7 @@ def update():
     mycursor=mysqldb.cursor()
  
     try:
-        mycursor.execute(f"SELECT * FROM data_kiot_viet.registation where id={studid}")
+        mycursor.execute(f"SELECT * FROM codegym.registation where id={studid}")
         records = mycursor.fetchall()
         if len(records) == 0:
             messagebox.showinfo("Information", "Mã nhân viên không tồn tại")
@@ -99,7 +98,7 @@ def delete():
     mycursor=mysqldb.cursor()
  
     try:
-            mycursor.execute(f"SELECT * FROM data_kiot_viet.registation where id={studid}")
+            mycursor.execute(f"SELECT * FROM codegym.registation where id={studid}")
             records = mycursor.fetchall()
             if len(records) == 0:
                 messagebox.showinfo("Information", "Mã nhân viên không tồn tại")
@@ -143,7 +142,7 @@ def find():
     mycursor=mysqldb.cursor()
     
     try:
-       mycursor.execute(f"SELECT * FROM data_kiot_viet.registation where id={studid}")
+       mycursor.execute(f"SELECT * FROM codegym.registation where id={studid}")
        records = mycursor.fetchall()
        #messagebox.showinfo("Information", "Tìm kiếm thành công")
        if len(records) == 0:
@@ -153,16 +152,17 @@ def find():
            for i, (id,stname, course,fee) in enumerate(records, start=1):
                     listBox.insert("", "end", values=(id, stname, course, fee))
                     mysqldb.close()
+     
+        
  
     except Exception as e:
        mysqldb.rollback()
        mysqldb.close()
 
-
 def save():
     file = filedialog.asksaveasfilename(defaultextension=".xlsx")
     engine = create_engine('mysql+mysqldb://codegym:%s@103.82.21.72:3306/codegym' % urllib.parse.quote('Datcang1!'), echo = False)
-    df = pd.read_sql("SELECT * FROM data_kiot_viet.registation;", con=engine)
+    df = pd.read_sql("SELECT * FROM codegym.registation;", con=engine)
     df.to_excel(file,index=False)
 
 def import_file():
@@ -176,7 +176,7 @@ def import_file():
     else:
         for i in id:
             try:
-                delete_id = pd.read_sql(f"delete from data_kiot_viet.registation where id={i};", con=engine)
+                delete_id = pd.read_sql(f"delete from codegym.registation where id={i};", con=engine)
             except:
                 continue
         df.to_sql(name = 'registation', con = engine, if_exists = 'append', index = False)
